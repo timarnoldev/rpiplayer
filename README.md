@@ -53,4 +53,4 @@ Fehlt ein Cover (Bluetooth, manche AirPlay-Apps), sucht die Anzeige es über die
 
 Netzadressen, Bluetooth-Kopplungsschlüssel (`/var/lib/bluetooth`), SSH-Schlüssel, Spotify-Zugangsdaten, Passwörter und Album-Cover.
 
-Schriften: Inter (SIL OFL, `assets/fonts/OFL.txt`). Icons: Lucide (ISC, `assets/icons/LICENSE.txt`).
+Code unter MIT-Lizenz (`LICENSE`). Schriften: Inter (SIL OFL, `assets/fonts/OFL.txt`). Icons: Lucide (ISC, `assets/icons/LICENSE.txt`).
