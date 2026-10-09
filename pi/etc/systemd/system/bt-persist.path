@@ -1,0 +1,6 @@
+[Unit]
+Description=Neue Bluetooth-Kopplungen erkennen
+[Path]
+PathChanged=/var/lib/bluetooth/<adapter-mac>
+[Install]
+WantedBy=multi-user.target

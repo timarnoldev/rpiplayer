@@ -1,0 +1,14 @@
+[Unit]
+Description=Bluetooth-Kopplung ohne PIN
+After=bluetooth.service
+Requires=bluetooth.service
+[Service]
+ExecStartPre=/usr/sbin/rfkill unblock bluetooth
+ExecStartPre=/usr/bin/bluetoothctl power on
+ExecStart=/usr/bin/bt-agent -c NoInputNoOutput
+ExecStartPost=/usr/bin/bluetoothctl discoverable on
+ExecStartPost=/usr/bin/bluetoothctl pairable on
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

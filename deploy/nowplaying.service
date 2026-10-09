@@ -1,0 +1,24 @@
+[Unit]
+Description=Läuft-gerade-Anzeige auf HDMI
+After=bluetooth.service raspotify.service shairport-sync.service getty@tty1.service
+Wants=bluetooth.service
+Conflicts=getty@tty1.service
+
+[Service]
+User=spotify
+SupplementaryGroups=video bluetooth
+WorkingDirectory=/opt/nowplaying
+Environment=PYTHONUNBUFFERED=1
+Environment=PYGAME_HIDE_SUPPORT_PROMPT=1
+ExecStart=/usr/bin/python3 -m nowplaying --fbdev /dev/fb0
+TTYPath=/dev/tty1
+StandardInput=tty-force
+StandardOutput=journal
+StandardError=journal
+TTYReset=yes
+TTYVHangup=yes
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

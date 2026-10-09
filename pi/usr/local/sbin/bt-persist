@@ -1,0 +1,10 @@
+#!/bin/sh
+# Overlay aktiv: neue Bluetooth-Kopplungen auf die read-only Ebene schreiben, sonst gehen sie beim Neustart verloren.
+set -e
+findmnt -n /media/root-ro >/dev/null 2>&1 || exit 0
+mount -o remount,rw /media/root-ro
+rsync -a --inplace --delete --exclude cache /var/lib/bluetooth/ /media/root-ro/var/lib/bluetooth/
+sync
+echo 2 > /proc/sys/vm/drop_caches
+mount -o remount,ro /media/root-ro
+logger -t bt-persist "Bluetooth-Kopplungen gesichert"

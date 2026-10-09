@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+# Called by librespot (LIBRESPOT_ONEVENT) once per player event; must return quickly and never fail playback.
+import json
+import os
+import sys
+import time
+
+EVENTS = os.environ.get("NOWPLAYING_EVENTS", "/run/nowplaying/librespot.jsonl")
+MAX_BYTES = 512 * 1024
+
+env = {k: v for k, v in os.environ.items() if k.isupper() and k not in ("PATH", "HOME", "LANG", "INVOCATION_ID", "JOURNAL_STREAM")}
+try:
+    if os.path.exists(EVENTS) and os.path.getsize(EVENTS) > MAX_BYTES:
+        os.replace(EVENTS, EVENTS + ".old")
+    with open(EVENTS, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"t": time.time(), "env": env}, ensure_ascii=False) + "\n")
+    # raspotify runs with UMask=0077; the display reads as another user.
+    os.chmod(EVENTS, 0o644)
+except OSError as exc:
+    print(f"librespot-event: {exc}", file=sys.stderr)

@@ -1,0 +1,6 @@
+[Unit]
+Description=Bluetooth-Kopplungen dauerhaft sichern
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/local/sbin/bt-persist
